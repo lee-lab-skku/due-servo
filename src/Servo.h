@@ -58,7 +58,12 @@
  * _Nbr_16timers indicates how many 16 bit timers are available.
  */
 
-#include "ServoTimers.h"
+#define TC_FOR_TIMER1       TC1
+#define CHANNEL_FOR_TIMER1  0
+#define ID_TC_FOR_TIMER1    ID_TC3
+#define IRQn_FOR_TIMER1     TC3_IRQn
+#define HANDLER_FOR_TIMER1  TC3_Handler
+typedef enum { _timer1, _timer2, _timer3, _timer4, _timer5, _Nbr_16timers } timer16_Sequence_t ;
 
 #define Servo_VERSION           2     // software version of this library
 
