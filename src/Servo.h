@@ -58,32 +58,7 @@
  * _Nbr_16timers indicates how many 16 bit timers are available.
  */
 
-// Architecture specific include
-#if defined(ARDUINO_ARCH_AVR)
-#include "avr/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_SAM)
-#include "sam/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_SAMD)
-#include "samd/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_STM32F4)
-#include "stm32f4/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_NRF52)
-#include "nrf52/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_MEGAAVR)
-#include "megaavr/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_MBED)
-#include "mbed/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_RENESAS)
-#include "renesas/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_XMC)
-#include "xmc/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_ESP32)
-#include "esp32/ServoTimers.h"
-#elif defined(ARDUINO_ARCH_ZEPHYR)
-#include "zephyr/ServoTimers.h"
-#else
-#error "This library only supports boards with an AVR, SAM, SAMD, NRF52, STM32F4, Renesas, XMC, ESP32 or Zephyr core."
-#endif
+#include "ServoTimers.h"
 
 #define Servo_VERSION           2     // software version of this library
 
