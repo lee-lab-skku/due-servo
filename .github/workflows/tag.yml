@@ -1,0 +1,51 @@
+name: Version Tag
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  tag-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get library version
+        id: library-version
+        run: |
+          VERSION=$(jq -r '.version' library.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Library version: $VERSION"
+
+      - name: Get latest tag
+        id: latest-tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          LATEST_VERSION=${LATEST_TAG#v}
+          echo "version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          echo "Latest tag: $LATEST_VERSION"
+
+      - name: Create and push tag
+        run: |
+          LIBRARY_VERSION="${{ steps.library-version.outputs.version }}"
+          LATEST_VERSION="${{ steps.latest-tag.outputs.version }}"
+          
+          if [ "$LIBRARY_VERSION" != "$LATEST_VERSION" ]; then
+            TAG_NAME="v$LIBRARY_VERSION"
+            echo "Version changed: $LATEST_VERSION -> $LIBRARY_VERSION"
+            
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag "$TAG_NAME"
+            git push origin "$TAG_NAME"
+            
+            echo "Tag $TAG_NAME created and pushed"
+          else
+            echo "Version unchanged: $LIBRARY_VERSION"
+          fi
