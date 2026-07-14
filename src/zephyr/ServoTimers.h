@@ -1,6 +1,7 @@
+#pragma once
+
 #define MAX_ZEPHYR_SERVOS 16
-
-#define TIMER DT_NODELABEL(counter_servo)
-
-const uint32_t servo_timer_base_us_tick = 4; 
-const uint32_t servo_timer_end_tick = 20000/servo_timer_base_us_tick;
+#define SERVO_TIMER_NODE DT_NODELABEL(counter_servo)
+#define SERVO_TIMER_ALARM_CHANNEL 0
+#define SERVO_TIMER_MIN_DELAY_US 4U
+#define SERVO_TIMER_GUARD_US 32U
